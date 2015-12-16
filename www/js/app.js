@@ -147,31 +147,30 @@ angular.module('todo', ['ionic'])
     if(!$scope.activeProject || !task) {
       return;
     }
-    console.log($scope.activeProject.tasks)
-    for(var key in $scope.activeProject.tasks){
-			if($scope.activeProject.tasks[key].title == task.title ){
-				$scope.activeProject.tasks.splice(key, 1);
-			}
-		}
-    /*
-    projects = angular.fromJson(window.localStorage['projects']);
-		for(var key in projects){
-			if(projects[key].title == project.title ){
-				projects.splice(key, 1);
-			}
-		}
-		window.localStorage['projects'] = angular.toJson(projects);
     
-    $scope.activeProject.tasks.push({
-      title: task.title
-    });
-    * * */
-    $scope.taskModal.hide();
+    var confirmPopup = $ionicPopup.confirm({
+			title: 'Are you sure ?',
+			template: 'Do you want do delete "'+task.title+'" task ?'
+		});
+		confirmPopup.then(function(res) {
+			if(res) {
+				for(var key in $scope.activeProject.tasks){
+					if($scope.activeProject.tasks[key].title == task.title ){
+						$scope.activeProject.tasks.splice(key, 1);
+					}
+				}
+			$scope.taskModal.hide();
 
-    // Inefficient, but save all the projects
-    Projects.save($scope.projects);
+			// Inefficient, but save all the projects
+			Projects.save($scope.projects);
 
-    task.title = "";
+			task.title = "";
+			} else {
+				console.log('You are not sure');
+			}
+		});
+    
+    
     
   };
 
