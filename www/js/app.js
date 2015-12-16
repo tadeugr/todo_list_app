@@ -101,10 +101,17 @@ angular.module('todo', ['ionic'])
 
   // Called to create a new project
   $scope.newProject = function() {
-    var projectTitle = prompt('Project name');
-    if(projectTitle) {
-      createProject(projectTitle);
-    }
+	   $ionicPopup.prompt({
+	   title: 'Add a project',
+	   template: 'Enter your project name',
+	   inputType: 'text',
+	   inputPlaceholder: 'Try to take over the world'
+	 }).then(function(res) {
+		if(res) {
+		  createProject(res);
+		}
+	 });
+
   };
 
   // Called to select the given project
