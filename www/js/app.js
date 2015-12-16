@@ -35,6 +35,16 @@ angular.module('todo', ['ionic'])
     save: function(projects) {
       window.localStorage['projects'] = angular.toJson(projects);
     },
+    deleteProject: function(project) {
+		projects = angular.fromJson(window.localStorage['projects']);
+		for(var key in projects){
+			if(projects[key].title == project.title ){
+				projects.splice(key, 1);
+			}
+			
+		}
+		window.localStorage['projects'] = angular.toJson(projects);
+    },
     newProject: function(projectTitle) {
       // Add a new project
       return {
@@ -60,6 +70,16 @@ angular.module('todo', ['ionic'])
     $scope.projects.push(newProject);
     Projects.save($scope.projects);
     $scope.selectProject(newProject, $scope.projects.length-1);
+  }
+  
+  $scope.deleteProject = function(project){
+	  Projects.deleteProject(project);
+	  $scope.projects = Projects.all()
+	  $scope.selectProject(project, $scope.projects.length-1);
+	  //console.log(window.localStorage['projects'])
+	  //window.localStorage['projects'] = angular.toJson(projects)
+	  //$scope.projects = window.localStorage['projects'];
+	  //$ionicSideMenuDelegate.toggleLeft(false);
   }
 
 
