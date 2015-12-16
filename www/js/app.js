@@ -32,6 +32,10 @@ angular.module('todo', ['ionic'])
       }
       return [];
     },
+    getFirst: function() {
+      var projectObj = angular.fromJson(window.localStorage['projects']);
+      return projectObj.shift();
+    },
     save: function(projects) {
       window.localStorage['projects'] = angular.toJson(projects);
     },
@@ -41,7 +45,6 @@ angular.module('todo', ['ionic'])
 			if(projects[key].title == project.title ){
 				projects.splice(key, 1);
 			}
-			
 		}
 		window.localStorage['projects'] = angular.toJson(projects);
     },
@@ -74,12 +77,8 @@ angular.module('todo', ['ionic'])
   
   $scope.deleteProject = function(project){
 	  Projects.deleteProject(project);
-	  $scope.projects = Projects.all()
-	  //$scope.selectProject(project, $scope.projects.length-1);
-	  //console.log(window.localStorage['projects'])
-	  //window.localStorage['projects'] = angular.toJson(projects)
-	  //$scope.projects = window.localStorage['projects'];
-	  //$ionicSideMenuDelegate.toggleLeft(false);
+	  $scope.projects = Projects.all();
+	  $scope.selectProject(Projects.getFirst(), $scope.projects.length-1);
   }
 
 
