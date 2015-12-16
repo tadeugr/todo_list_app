@@ -75,7 +75,7 @@ angular.module('todo', ['ionic'])
   $scope.deleteProject = function(project){
 	  Projects.deleteProject(project);
 	  $scope.projects = Projects.all()
-	  $scope.selectProject(project, $scope.projects.length-1);
+	  //$scope.selectProject(project, $scope.projects.length-1);
 	  //console.log(window.localStorage['projects'])
 	  //window.localStorage['projects'] = angular.toJson(projects)
 	  //$scope.projects = window.localStorage['projects'];
